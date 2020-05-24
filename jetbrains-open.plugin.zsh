@@ -29,7 +29,7 @@ function jetbrains-open() {
     )
     local -A language_commands=(
         Java idea
-        JavaScript webcharm
+        JavaScript webstorm
         Go goland
         Python pycharm
     )
