@@ -1,7 +1,7 @@
 autoload colors && colors
 
 function _jetbrains-open-print-usage() {
-    print 'usage: jetbrains-open [--verbose | -v] [--help | -h]'
+    print 'usage: jetbrains-open [--dry-run | -n] [--verbose | -v] [--help | -h]'
     print
     print 'open a project directory in its corresponding JetBrains IDE'
     print
