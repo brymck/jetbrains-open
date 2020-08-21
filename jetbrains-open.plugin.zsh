@@ -14,6 +14,7 @@ function jetbrains-open() {
     local yup="${fg_no_bold[green]}\u2713$reset_color"
     local nope="${fg_no_bold[red]}\u2717$reset_color"
     local files=(
+        .ijwb
         build.gradle
         pom.xml
         package.json
@@ -21,6 +22,7 @@ function jetbrains-open() {
         setup.py
     )
     local -A file_languages=(
+        .ijwb Bazel
         build.gradle Java
         pom.xml Java
         package.json JavaScript
@@ -28,10 +30,18 @@ function jetbrains-open() {
         setup.py Python
     )
     local -A language_commands=(
+        Bazel idea
         Java idea
         JavaScript webstorm
         Go goland
         Python pycharm
+    )
+    local -A language_targets=(
+        Bazel .ijwb
+        Java $PWD
+        JavaScript $PWD
+        Go $PWD
+        Python $PWD
     )
     local -a verbose help
     local check_format=" %b %-12s ${fg_no_bold[cyan]}%s$reset_color\n"
@@ -59,7 +69,8 @@ function jetbrains-open() {
                     if [[ -n $verbose ]]; then
                         printf $check_format $yup $command $language
                     fi
-                    $command $PWD
+                    target=$language_targets[$language]
+                    $command $target
                     return 0
                 else
                     if [[ -n $verbose ]]; then
@@ -71,7 +82,11 @@ function jetbrains-open() {
                 if [[ -n $verbose ]]; then
                     printf $check_format $yup idea Any
                 fi
-                idea $PWD
+                target=$language_targets[$language]
+                if [[ -n $target ]]; then
+                    target=$PWD
+                fi
+                idea $target
                 return 0
             else
                 if [[ -n $verbose ]]; then
