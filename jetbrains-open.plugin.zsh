@@ -38,7 +38,7 @@ function jetbrains-open() {
         Python pycharm
     )
     local -A language_targets=(
-        Bazel .ijwb
+        Bazel $PWD/.ijwb
         Java $PWD
         JavaScript $PWD
         Go $PWD
@@ -89,7 +89,7 @@ function jetbrains-open() {
                     printf $check_format $yup idea Any
                 fi
                 target=$language_targets[$language]
-                if [[ -n $target ]]; then
+                if [[ -z $target ]]; then
                     target=$PWD
                 fi
                 if [[ -n $dry_run ]]; then
