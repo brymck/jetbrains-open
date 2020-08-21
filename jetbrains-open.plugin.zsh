@@ -72,7 +72,8 @@ function jetbrains-open() {
                     fi
                     target=$language_targets[$language]
                     if [[ -n $dry_run ]]; then
-                        print "$ $command $target"
+                        print
+                        print "$ ${fg_no_bold[yellow]}$command $target$reset_color"
                     else
                         $command $target
                     fi
@@ -92,7 +93,8 @@ function jetbrains-open() {
                     target=$PWD
                 fi
                 if [[ -n $dry_run ]]; then
-                    print "$ idea $target"
+                    print
+                    print "$ ${fg_no_bold[yellow]}idea $target$reset_color"
                 else
                     idea $target
                 fi
