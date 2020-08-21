@@ -6,6 +6,7 @@ function _jetbrains-open-print-usage() {
     print 'open a project directory in its corresponding JetBrains IDE'
     print
     print 'options:'
+    print '  -n, --dry-run  dry run'
     print '  -v, --verbose  print verbose information'
     print '  -h, --help     display help'
 }
@@ -46,7 +47,7 @@ function jetbrains-open() {
     local -a verbose help
     local check_format=" %b %-12s ${fg_no_bold[cyan]}%s$reset_color\n"
 
-    zparseopts -D -E -- v=verbose -verbose=verbose h=help -help=help
+    zparseopts -D -E -- n=dry_run -dry-run=dry_run v=verbose -verbose=verbose h=help -help=help
     if [[ -n $help ]]; then
         _jetbrains-open-print-usage
         return 0
@@ -70,7 +71,11 @@ function jetbrains-open() {
                         printf $check_format $yup $command $language
                     fi
                     target=$language_targets[$language]
-                    $command $target
+                    if [[ -n $dry_run ]]; then
+                        print "$ $command $target"
+                    else
+                        $command $target
+                    fi
                     return 0
                 else
                     if [[ -n $verbose ]]; then
@@ -86,7 +91,11 @@ function jetbrains-open() {
                 if [[ -n $target ]]; then
                     target=$PWD
                 fi
-                idea $target
+                if [[ -n $dry_run ]]; then
+                    print "$ idea $target"
+                else
+                    idea $target
+                fi
                 return 0
             else
                 if [[ -n $verbose ]]; then
