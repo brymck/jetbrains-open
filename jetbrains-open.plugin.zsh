@@ -15,7 +15,7 @@ function jetbrains-open() {
     local yup="${fg_no_bold[green]}\u2713$reset_color"
     local nope="${fg_no_bold[red]}\u2717$reset_color"
     local files=(
-        .ijwb
+        .ijwb/
         build.gradle
         pom.xml
         package.json
@@ -23,7 +23,7 @@ function jetbrains-open() {
         setup.py
     )
     local -A file_languages=(
-        .ijwb Bazel
+        .ijwb/ Bazel
         build.gradle Java
         pom.xml Java
         package.json JavaScript
@@ -58,7 +58,7 @@ function jetbrains-open() {
     fi
     for file in $files; do
         language=$file_languages[$file]
-        if [ -f $file ]; then
+        if [ -e $file ]; then
             if [[ -n $verbose ]]; then
                 printf $check_format $yup $file $language
                 print
